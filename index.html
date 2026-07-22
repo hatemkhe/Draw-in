@@ -1,13 +1,655 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
+    <title>Khemamssa Hatem - Portfolio</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    
+    <style>
+      /* Base Style Overrides */
+      html {
+        scroll-behavior: smooth;
+        background-color: #020617;
+        color-scheme: dark;
+        font-family: 'Inter', sans-serif;
+      }
+      
+      /* Hide Arabic elements completely */
+      .ar-text { display: none !important; }
+      .en-text { display: initial !important; }
+      
+      /* Subtle custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #020617;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #1e293b;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #334155;
+      }
+
+      /* Clean Minimalism Design Theme Classes */
+      .dot-grid {
+        background-image: radial-gradient(#1e293b 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+
+      .glass {
+        background: rgba(15, 23, 42, 0.6) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+      }
+
+      .card-hover {
+        transition: all 0.2s ease !important;
+      }
+      .card-hover:hover {
+        border-color: #3b82f6 !important;
+        background: rgba(59, 130, 246, 0.05) !important;
+        transform: translateY(-2px) !important;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+        color: white !important;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2) !important;
+      }
+
+      .btn-secondary {
+        background: #1e293b !important;
+        border: 1px solid #334155 !important;
+        color: #94a3b8 !important;
+      }
+
+      .btn-disabled {
+        background: #0f172a !important;
+        border: 1px solid #1e293b !important;
+        color: #475569 !important;
+        cursor: not-allowed !important;
+      }
+    </style>
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+  <body class="bg-[#020617] text-slate-100 selection:bg-blue-600 selection:text-white overflow-x-hidden min-h-screen relative font-sans dot-grid">
+    
+    <!-- Background Ambient Glows -->
+    <div class="absolute top-0 left-1/4 w-[400px] h-[400px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute top-[30%] right-1/4 w-[500px] h-[500px] bg-indigo-950/10 rounded-full blur-[150px] pointer-events-none"></div>
+    <div class="absolute bottom-[20%] left-10 w-[350px] h-[350px] bg-blue-950/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <!-- Sticky Navigation Header -->
+    <header class="sticky top-0 z-50 w-full backdrop-blur-md bg-slate-950/40 border-b border-white/5 transition-all duration-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        
+        <!-- Logo / Brand Info -->
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-950 flex items-center justify-center shadow-lg shadow-blue-900/10 border border-white/5">
+              <i data-lucide="gamepad-2" class="w-5 h-5 text-blue-100"></i>
+            </div>
+            <span class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-black animate-pulse"></span>
+          </div>
+          <div>
+            <span class="text-sm font-semibold text-white tracking-wider block leading-tight">
+              <span class="ar-text">خمامسة حاتم 🇩🇿</span>
+              <span class="en-text">Khemamssa Hatem 🇩🇿</span>
+            </span>
+            <span class="text-xs text-blue-400 font-mono block">
+              <span class="ar-text">مطور ألعاب ومبرمج مستقل</span>
+              <span class="en-text">Game Dev & Freelance</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Right Side Nav -->
+        <div class="flex items-center gap-4 sm:gap-6">
+          <nav class="hidden md:flex items-center gap-6">
+            <a href="#hero" class="text-sm font-medium text-slate-400 hover:text-white transition-colors duration-200">
+              <span class="en-text">Home</span>
+            </a>
+            <a href="#projects" class="text-sm font-medium text-slate-400 hover:text-white transition-colors duration-200">
+              <span class="en-text">Projects</span>
+            </a>
+            <a href="#connect" class="text-sm font-medium text-slate-400 hover:text-white transition-colors duration-200">
+              <span class="en-text">Support & Connect</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative pt-12 pb-24 md:pt-20 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center">
+      <div class="text-center max-w-3xl">
+        
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass text-blue-400 text-xs font-semibold mb-6">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 animate-pulse"></i>
+          <span>
+            <span class="ar-text">مطور ألعاب ومبرمج مستقل</span>
+            <span class="en-text">Freelance Programmer & Game Developer</span>
+          </span>
+        </div>
+
+        <!-- Name -->
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6">
+          <span class="text-white">
+            <span class="ar-text">خمامسة حاتم 🇩🇿</span>
+            <span class="en-text">Khemamssa Hatem 🇩🇿</span>
+          </span>
+        </h1>
+
+        <!-- Bio -->
+        <p class="text-lg sm:text-xl text-slate-400 leading-relaxed mb-10 max-w-2xl mx-auto">
+          <span class="ar-text">متخصص في بناء ألعاب فيديو تفاعلية ومميزة باستخدام محركي Godot و Unity، بالإضافة إلى صياغة خوارزميات ومنطق برميجي نظيف ومثالي عبر لغات متعددة تشمل C++، C#، GDScript، و Python.</span>
+          <span class="en-text">I specialize in developing immersive, highly interactive video games using Godot and Unity, and engineering clean, optimized logic across various languages including C++, C#, GDScript, and Python.</span>
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a 
+            href="#projects" 
+            class="btn-primary w-full sm:w-auto px-8 py-4 rounded-xl text-white font-bold tracking-wide transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 card-hover"
+          >
+            <span class="ar-text">استكشف مشاريعي</span>
+            <span class="en-text">Explore My Projects</span>
+            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </a>
+          
+          <a 
+            href="#connect" 
+            class="btn-secondary w-full sm:w-auto px-8 py-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 card-hover"
+          >
+            <span class="ar-text">الدعم والتواصل</span>
+            <span class="en-text">Support & Connect</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Skills Cards Grid -->
+      <div class="w-full mt-20 max-w-5xl">
+        <div class="text-center mb-8">
+          <h3 class="text-lg font-bold uppercase tracking-wider text-slate-500 font-mono">
+            <span class="ar-text">الخبرات والتقنيات البرمجية</span>
+            <span class="en-text">Core Skills & Technologies</span>
+          </h3>
+          <div class="w-16 h-1 bg-blue-500/30 mx-auto mt-2 rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Game Engines Card -->
+          <div class="glass p-6 rounded-2xl shadow-md card-hover transition-all duration-300">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="p-2.5 rounded-lg bg-blue-950/40 border border-blue-900/30 text-blue-400">
+                <i data-lucide="gamepad-2" class="w-5 h-5"></i>
+              </div>
+              <h4 class="text-base font-bold text-white">
+                <span class="ar-text">محركات الألعاب</span>
+                <span class="en-text">Game Engines</span>
+              </h4>
+            </div>
+            <div class="flex flex-wrap gap-2.5">
+              <span class="px-3 py-1.5 rounded-lg bg-slate-900/60 border border-white/5 text-sm font-semibold text-blue-200 hover:text-white hover:border-white/20 transition-all">Godot Engine (GDScript)</span>
+              <span class="px-3 py-1.5 rounded-lg bg-slate-900/60 border border-white/5 text-sm font-semibold text-blue-200 hover:text-white hover:border-white/20 transition-all">Unity Engine (C#)</span>
+              <span class="px-3 py-1.5 rounded-lg bg-slate-900/60 border border-white/5 text-sm font-semibold text-blue-200 hover:text-white hover:border-white/20 transition-all">2D & 3D Gameplay Mechanics</span>
+            </div>
+          </div>
+
+          <!-- Programming Languages Card -->
+          <div class="glass p-6 rounded-2xl shadow-md card-hover transition-all duration-300">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="p-2.5 rounded-lg bg-blue-950/40 border border-blue-900/30 text-blue-400">
+                <i data-lucide="code-2" class="w-5 h-5"></i>
+              </div>
+              <h4 class="text-base font-bold text-white">
+                <span class="ar-text">لغات البرمجة</span>
+                <span class="en-text">Programming Languages</span>
+              </h4>
+            </div>
+            <div class="flex flex-wrap gap-2.5 font-mono">
+              <span class="px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-white/5 text-sm text-slate-300 hover:text-white hover:border-white/20 transition-all">C++</span>
+              <span class="px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-white/5 text-sm text-slate-300 hover:text-white hover:border-white/20 transition-all">C#</span>
+              <span class="px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-white/5 text-sm text-slate-300 hover:text-white hover:border-white/20 transition-all">GDScript</span>
+              <span class="px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-white/5 text-sm text-slate-300 hover:text-white hover:border-white/20 transition-all">Python</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Grid Section -->
+    <section id="projects" class="py-20 md:py-28 bg-[#020617]/30 border-t border-slate-950">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Title Block -->
+        <div class="text-center mb-16 max-w-2xl mx-auto">
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">
+            <span class="ar-text">مشاريعي البرمجية</span>
+            <span class="en-text">My Projects</span>
+          </h2>
+          <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+            <span class="ar-text">معرض للألعاب النشطة، الأدوات، والإصدارات المجدولة لعامي 2026 و 2027.</span>
+            <span class="en-text">A curated showcase of active games, production tools, and scheduled releases for 2026 and 2027.</span>
+          </p>
+          <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mt-4 rounded-full"></div>
+        </div>
+
+        <!-- Row 1: Featured Live Project -->
+        <div class="mb-14">
+          <div class="flex items-center gap-2 mb-6">
+            <span class="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-emerald-400 font-mono">
+              <span class="ar-text">الإصدارات الحالية</span>
+              <span class="en-text">Active Releases</span>
+            </h3>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Minecraft Project Card -->
+            <div id="project-mc-commands" class="glass p-6 rounded-2xl flex flex-col justify-between card-hover border-blue-500/30 overflow-hidden relative">
+              <div class="absolute top-0 right-0 left-0 h-[3px] bg-blue-500"></div>
+              
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="px-2.5 py-1 text-[10px] uppercase font-bold tracking-wider rounded-md bg-blue-950/40 text-blue-400 border border-blue-900/30">
+                    <span class="ar-text">مشروع نشط</span>
+                    <span class="en-text">Live Project</span>
+                  </span>
+                  <span class="text-xs text-slate-500 font-mono">2026</span>
+                </div>
+
+                <h4 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors duration-200 mb-3">
+                  MC Commands - Minecraft
+                </h4>
+                
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                  <span class="ar-text">مساعد برميجي وتفاعلي متقدم للاعبي ماين كرافت، يتيح لك صياغة، فحص، ونسخ الأوامر البرمجية بسهولة لتسهيل بناء العوالم الضخمة.</span>
+                  <span class="en-text">An advanced, interactive command-helper utility and reference companion for Minecraft players. Seamlessly construct, test, and copy command strings to automate and shape massive worlds.</span>
+                </p>
+
+                <div class="flex flex-wrap gap-1.5 mb-6">
+                  <span class="text-[11px] font-mono bg-slate-900/60 border border-white/5 text-slate-300 px-2.5 py-1 rounded">Minecraft UI</span>
+                  <span class="text-[11px] font-mono bg-slate-900/60 border border-white/5 text-slate-300 px-2.5 py-1 rounded">Command Parser</span>
+                  <span class="text-[11px] font-mono bg-slate-900/60 border border-white/5 text-slate-300 px-2.5 py-1 rounded">Web App</span>
+                </div>
+              </div>
+
+              <!-- CTA Button linking to Minecraft command host -->
+              <div class="mt-auto">
+                <a 
+                  href="https://wunxrvqhoxb8yfdqkti4gi1h4.bolt.host" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="btn-primary w-full py-3 px-4 rounded-xl text-xs font-bold text-center inline-flex items-center justify-center gap-2 card-hover"
+                >
+                  <span>
+                    <span class="ar-text">تشغيل / عرض المشروع</span>
+                    <span class="en-text">Play / View Project</span>
+                  </span>
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Future Roadmap 2026 -->
+        <div class="mb-14">
+          <div class="flex items-center gap-2 mb-6 border-t border-white/5 pt-8">
+            <i data-lucide="lock" class="w-4 h-4 text-slate-500"></i>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 font-mono">
+              <span class="ar-text">خارطة طريق 2026</span>
+              <span class="en-text">2026 Roadmap</span>
+              <span class="text-xs text-slate-500 font-normal lowercase normal-case">
+                — 
+                <span class="ar-text">مشاريع قادمة ومجدولة للإطلاق في وقت لاحق من هذا العام</span>
+                <span class="en-text">upcoming projects scheduled for release later this year</span>
+              </span>
+            </h3>
+          </div>
+
+          <!-- 3 Separate Cards for 2026 -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- To Do List Project Card -->
+            <div id="project-todo-list" class="glass p-6 rounded-2xl flex flex-col justify-between card-hover border-emerald-500/30 overflow-hidden relative">
+              <div class="absolute top-0 right-0 left-0 h-[3px] bg-emerald-500"></div>
+              
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="px-2.5 py-1 text-[10px] uppercase font-bold tracking-wider rounded-md bg-emerald-950/40 text-emerald-400 border border-emerald-900/30">
+                    <span class="en-text">Live Project</span>
+                  </span>
+                  <span class="text-xs text-slate-500 font-mono">2026</span>
+                </div>
+
+                <h4 class="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors duration-200 mb-3">
+                  To Do List
+                </h4>
+                
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                  <span class="en-text">A sleek, highly interactive task management and scheduling web app optimized for daily freelance and developer tasks.</span>
+                </p>
+
+                <div class="flex flex-wrap gap-1.5 mb-6">
+                  <span class="text-[11px] font-mono bg-slate-900/60 border border-white/5 text-slate-300 px-2.5 py-1 rounded">React</span>
+                  <span class="text-[11px] font-mono bg-slate-900/60 border border-white/5 text-slate-300 px-2.5 py-1 rounded">Tailwind CSS</span>
+                  <span class="text-[11px] font-mono bg-slate-900/60 border border-white/5 text-slate-300 px-2.5 py-1 rounded">Task Manager</span>
+                </div>
+              </div>
+
+              <!-- CTA Button linking to To Do list -->
+              <div class="mt-auto">
+                <a 
+                  href="https://tubular-longma-305ef9.netlify.app/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="btn-primary w-full py-3 px-4 rounded-xl text-xs font-bold text-center inline-flex items-center justify-center gap-2 card-hover"
+                >
+                  <span>
+                    <span class="en-text">Play / View Project</span>
+                  </span>
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Draw In Project Card -->
+            <div id="project-draw-in" class="glass p-6 rounded-2xl flex flex-col justify-between card-hover border-blue-500/30 overflow-hidden relative">
+              <div class="absolute top-0 right-0 left-0 h-[3px] bg-blue-500"></div>
+              
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="px-2.5 py-1 text-[10px] uppercase font-bold tracking-wider rounded-md bg-blue-950/40 text-blue-400 border border-blue-900/30">
+                    <span class="en-text">Live Project</span>
+                  </span>
+                  <span class="text-xs text-slate-500 font-mono">2026</span>
+                </div>
+
+                <h4 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors duration-200 mb-3">
+                  Draw In
+                </h4>
+                
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                  <span class="en-text">An intuitive web-based drawing and digital canvas application built for creative sketching, canvas manipulation, and artwork export.</span>
+                </p>
+
+                <div class="flex flex-wrap gap-1.5 mb-6">
+                  <span class="text-[11px] font-mono bg-slate-900/60 border border-white/5 text-slate-300 px-2.5 py-1 rounded">Canvas API</span>
+                  <span class="text-[11px] font-mono bg-slate-900/60 border border-white/5 text-slate-300 px-2.5 py-1 rounded">Web App</span>
+                  <span class="text-[11px] font-mono bg-slate-900/60 border border-white/5 text-slate-300 px-2.5 py-1 rounded">Digital Art</span>
+                </div>
+              </div>
+
+              <!-- CTA Button linking to Draw In -->
+              <div class="mt-auto">
+                <a 
+                  href="https://drawkhe.netlify.app/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="btn-primary w-full py-3 px-4 rounded-xl text-xs font-bold text-center inline-flex items-center justify-center gap-2 card-hover"
+                >
+                  <span>
+                    <span class="en-text">Play / View Project</span>
+                  </span>
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Card 2026 #3 -->
+            <div id="slot-2026-3" class="glass p-6 rounded-2xl flex flex-col justify-between opacity-80 card-hover">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="px-2 py-0.5 text-[9px] uppercase font-bold tracking-wider rounded bg-slate-900 text-slate-400 border border-slate-800">2026</span>
+                  <i data-lucide="lock" class="w-3.5 h-3.5 text-slate-600"></i>
+                </div>
+                <h4 class="text-base font-bold text-slate-400 mb-2">
+                  <span class="ar-text">مشروع خارطة طريق 2026 #3</span>
+                  <span class="en-text">Roadmap 2026 Project #3</span>
+                </h4>
+                <p class="text-xs text-slate-500 leading-relaxed mb-6">
+                  <span class="ar-text">نظام لعب أو أداة برمجية جديدة قيد التصميم حالياً، مجدولة للتطوير والإطلاق في وقت لاحق من هذا العام.</span>
+                  <span class="en-text">An independent gameplay system or tool currently in concept phase. Slated for design and release later this year.</span>
+                </p>
+              </div>
+              <button disabled class="btn-disabled py-2.5 px-4 rounded-xl text-xs font-bold w-full flex items-center justify-center gap-1.5">
+                <i data-lucide="lock" class="w-3 h-3"></i>
+                <span>
+                  <span class="ar-text">قيد التطوير</span>
+                  <span class="en-text">In Development</span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3: Future Pipeline 2027 -->
+        <div>
+          <div class="flex items-center gap-2 mb-6 border-t border-slate-900/60 pt-8">
+            <i data-lucide="lock" class="w-4 h-4 text-slate-500"></i>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 font-mono">
+              <span class="ar-text">مخططات عام 2027</span>
+              <span class="en-text">2027 Pipeline</span>
+              <span class="text-xs text-slate-500 font-normal lowercase normal-case">
+                — 
+                <span class="ar-text">أفكار برمجية ونماذج أولية مجدولة للبدء في هندستها وتطويرها في 2027</span>
+                <span class="en-text">conceptual concepts scheduled for development & architecture</span>
+              </span>
+            </h3>
+          </div>
+
+          <!-- 5 Separate Cards for 2027 -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+            <!-- 2027 #1 -->
+            <div id="slot-2027-1" class="glass p-5 rounded-2xl flex flex-col justify-between opacity-80 card-hover">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="px-2 py-0.5 text-[8px] uppercase font-bold tracking-wider rounded bg-blue-950/20 text-blue-500 border border-blue-900/20">2027</span>
+                  <i data-lucide="lock" class="w-3 h-3 text-slate-700"></i>
+                </div>
+                <h4 class="text-sm font-bold text-slate-500 mb-2">
+                  <span class="ar-text">نموذج 2027 #1</span>
+                  <span class="en-text">2027 Prototype #1</span>
+                </h4>
+                <p class="text-[11px] text-slate-600 leading-relaxed mb-4">
+                  <span class="ar-text">هندسة معمارية برمجية ونماذج أولية قيد الدراسة والتمهيد.</span>
+                  <span class="en-text">Conceptual system architecture or gameplay prototype slated for early 2027.</span>
+                </p>
+              </div>
+              <button disabled class="btn-disabled py-2 rounded-xl text-[10px] font-semibold w-full">
+                <span>
+                  <span class="ar-text">قيد التطوير</span>
+                  <span class="en-text">In Development</span>
+                </span>
+              </button>
+            </div>
+
+            <!-- 2027 #2 -->
+            <div id="slot-2027-2" class="glass p-5 rounded-2xl flex flex-col justify-between opacity-80 card-hover">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="px-2 py-0.5 text-[8px] uppercase font-bold tracking-wider rounded bg-blue-950/20 text-blue-500 border border-blue-900/20">2027</span>
+                  <i data-lucide="lock" class="w-3 h-3 text-slate-700"></i>
+                </div>
+                <h4 class="text-sm font-bold text-slate-500 mb-2">
+                  <span class="ar-text">نموذج 2027 #2</span>
+                  <span class="en-text">2027 Prototype #2</span>
+                </h4>
+                <p class="text-[11px] text-slate-600 leading-relaxed mb-4">
+                  <span class="ar-text">هندسة معمارية برمجية ونماذج أولية قيد الدراسة والتمهيد.</span>
+                  <span class="en-text">Conceptual system architecture or gameplay prototype slated for early 2027.</span>
+                </p>
+              </div>
+              <button disabled class="btn-disabled py-2 rounded-xl text-[10px] font-semibold w-full">
+                <span>
+                  <span class="ar-text">قيد التطوير</span>
+                  <span class="en-text">In Development</span>
+                </span>
+              </button>
+            </div>
+
+            <!-- 2027 #3 -->
+            <div id="slot-2027-3" class="glass p-5 rounded-2xl flex flex-col justify-between opacity-80 card-hover">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="px-2 py-0.5 text-[8px] uppercase font-bold tracking-wider rounded bg-blue-950/20 text-blue-500 border border-blue-900/20">2027</span>
+                  <i data-lucide="lock" class="w-3 h-3 text-slate-700"></i>
+                </div>
+                <h4 class="text-sm font-bold text-slate-500 mb-2">
+                  <span class="ar-text">نموذج 2027 #3</span>
+                  <span class="en-text">2027 Prototype #3</span>
+                </h4>
+                <p class="text-[11px] text-slate-600 leading-relaxed mb-4">
+                  <span class="ar-text">هندسة معمارية برمجية ونماذج أولية قيد الدراسة والتمهيد.</span>
+                  <span class="en-text">Conceptual system architecture or gameplay prototype slated for early 2027.</span>
+                </p>
+              </div>
+              <button disabled class="btn-disabled py-2 rounded-xl text-[10px] font-semibold w-full">
+                <span>
+                  <span class="ar-text">قيد التطوير</span>
+                  <span class="en-text">In Development</span>
+                </span>
+              </button>
+            </div>
+
+            <!-- 2027 #4 -->
+            <div id="slot-2027-4" class="glass p-5 rounded-2xl flex flex-col justify-between opacity-80 card-hover">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="px-2 py-0.5 text-[8px] uppercase font-bold tracking-wider rounded bg-blue-950/20 text-blue-500 border border-blue-900/20">2027</span>
+                  <i data-lucide="lock" class="w-3 h-3 text-slate-700"></i>
+                </div>
+                <h4 class="text-sm font-bold text-slate-500 mb-2">
+                  <span class="ar-text">نموذج 2027 #4</span>
+                  <span class="en-text">2027 Prototype #4</span>
+                </h4>
+                <p class="text-[11px] text-slate-600 leading-relaxed mb-4">
+                  <span class="ar-text">هندسة معمارية برمجية ونماذج أولية قيد الدراسة والتمهيد.</span>
+                  <span class="en-text">Conceptual system architecture or gameplay prototype slated for early 2027.</span>
+                </p>
+              </div>
+              <button disabled class="btn-disabled py-2 rounded-xl text-[10px] font-semibold w-full">
+                <span>
+                  <span class="ar-text">قيد التطوير</span>
+                  <span class="en-text">In Development</span>
+                </span>
+              </button>
+            </div>
+
+            <!-- 2027 #5 -->
+            <div id="slot-2027-5" class="glass p-5 rounded-2xl flex flex-col justify-between opacity-80 card-hover">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="px-2 py-0.5 text-[8px] uppercase font-bold tracking-wider rounded bg-blue-950/20 text-blue-500 border border-blue-900/20">2027</span>
+                  <i data-lucide="lock" class="w-3 h-3 text-slate-700"></i>
+                </div>
+                <h4 class="text-sm font-bold text-slate-500 mb-2">
+                  <span class="ar-text">نموذج 2027 #5</span>
+                  <span class="en-text">2027 Prototype #5</span>
+                </h4>
+                <p class="text-[11px] text-slate-600 leading-relaxed mb-4">
+                  <span class="ar-text">هندسة معمارية برمجية ونماذج أولية قيد الدراسة والتمهيد.</span>
+                  <span class="en-text">Conceptual system architecture or gameplay prototype slated for early 2027.</span>
+                </p>
+              </div>
+              <button disabled class="btn-disabled py-2 rounded-xl text-[10px] font-semibold w-full">
+                <span>
+                  <span class="ar-text">قيد التطوير</span>
+                  <span class="en-text">In Development</span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Connect & Footer Section -->
+    <footer id="connect" class="relative py-24 border-t border-white/5 overflow-hidden">
+      <!-- Glow background -->
+      <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[350px] h-[350px] bg-blue-900/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">
+          <span class="ar-text">التواصل والدعم الفني</span>
+          <span class="en-text">Connect & Support</span>
+        </h2>
+        
+        <p class="text-slate-400 text-sm sm:text-base max-w-lg mx-auto mb-12">
+          <span class="ar-text">تابع حسابي الرسمي على منصة إنستغرام أو ادعم عملي البرمجي المستقل ومشاريعي القادمة مجاناً.</span>
+          <span class="en-text">Follow my official Instagram feed or support my independent development projects directly.</span>
+        </p>
+
+        <!-- Dynamic Action Buttons Side by Side -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-6 max-w-2xl mx-auto mb-16">
+          
+          <!-- Instagram Button -->
+          <a 
+            href="https://www.instagram.com/hatemkhe.12?igsh=N29meXdndXpidm1r" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            id="instagram-btn"
+            class="btn-secondary w-full sm:w-1/2 flex items-center justify-center gap-3 px-6 py-4 rounded-xl text-sm font-bold card-hover"
+          >
+            <i data-lucide="instagram" class="w-5 h-5 text-slate-400 group-hover:text-pink-500 group-hover:scale-110 transition-all duration-300"></i>
+            <span>
+              <span class="ar-text">حسابي إنستغرام</span>
+              <span class="en-text">My Instagram</span>
+            </span>
+          </a>
+
+          <!-- Support Button -->
+          <a 
+            href="https://apk-file-generation-hnac.bolt.host" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            id="support-btn"
+            class="btn-primary w-full sm:w-1/2 flex items-center justify-center gap-3 px-6 py-4 rounded-xl text-sm font-bold card-hover"
+          >
+            <i data-lucide="heart" class="w-5 h-5 text-white fill-blue-200/20 group-hover:text-red-400 group-hover:fill-red-500 group-hover:scale-110 transition-all duration-300"></i>
+            <span>
+              <span class="ar-text">ادعمني - مجاناً</span>
+              <span class="en-text">Support Me - Free</span>
+            </span>
+          </a>
+
+        </div>
+
+        <div class="border-t border-white/5 pt-8 mt-8">
+          <p class="text-xs text-slate-500">
+            <span class="ar-text">© 2026 خمامسة حاتم. جميع الحقوق محفوظة. صُمم بدقة عالية.</span>
+            <span class="en-text">© 2026 Khemamssa Hatem. All rights reserved. Designed with precision.</span>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Lucide Icons Library and Initializer -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      // Initialize Lucide Icons
+      lucide.createIcons();
+
+      // Set and force English preference on load
+      window.addEventListener('DOMContentLoaded', () => {
+        const html = document.documentElement;
+        html.setAttribute('lang', 'en');
+        html.setAttribute('dir', 'ltr');
+        html.style.fontFamily = "'Inter', sans-serif";
+      });
+    </script>
   </body>
 </html>
-
