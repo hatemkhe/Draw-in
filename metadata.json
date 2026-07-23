@@ -1,5 +1,5 @@
 {
-  "name": "Canvas Art Studio Pro",
+  "name": "Draw In",
   "description": "Professional web-based drawing and digital art suite with layers, custom brushes, pressure sensitivity, symmetry, vector shapes, filters, and project exports.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
