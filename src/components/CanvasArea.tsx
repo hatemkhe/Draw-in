@@ -48,6 +48,11 @@ export const CanvasArea: React.FC<CanvasAreaProps> = ({
   const [mousePos, setMousePos] = useState<Point>({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
 
+  // Multi-touch tracking for smartphone pinch zoom and panning
+  const activePointersRef = useRef<Map<number, { x: number; y: number }>>(new Map());
+  const pinchDistRef = useRef<number | null>(null);
+  const isPinchingRef = useRef<boolean>(false);
+
   // Redraw main viewport canvas whenever engine signals change or state updates
   const redrawViewport = useCallback(() => {
     const canvas = canvasRef.current;
@@ -129,6 +134,18 @@ export const CanvasArea: React.FC<CanvasAreaProps> = ({
   // Pointer Down
   const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
     e.currentTarget.setPointerCapture(e.pointerId);
+    activePointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    // Multi-touch pinch zoom setup
+    if (activePointersRef.current.size >= 2) {
+      isPinchingRef.current = true;
+      const pts = Array.from(activePointersRef.current.values()) as { x: number; y: number }[];
+      const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+      pinchDistRef.current = dist;
+      setIsDrawing(false);
+      return;
+    }
+
     const pt = getCanvasPoint(e);
     setIsDrawing(true);
     setLastPoint(pt);
@@ -242,11 +259,41 @@ export const CanvasArea: React.FC<CanvasAreaProps> = ({
 
   // Pointer Move
   const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (activePointersRef.current.has(e.pointerId)) {
+      activePointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    }
+
+    // Handle Multi-Touch Pinch Zoom and Pan
+    if (activePointersRef.current.size >= 2) {
+      const pts = Array.from(activePointersRef.current.values()) as { x: number; y: number }[];
+      const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+
+      if (pinchDistRef.current !== null && pinchDistRef.current > 0) {
+        const factor = dist / pinchDistRef.current;
+        const newZoom = Math.min(10, Math.max(0.1, engine.transform.zoom * factor));
+        
+        // Midpoint of the 2 touch points
+        const canvas = canvasRef.current;
+        if (canvas) {
+          const rect = canvas.getBoundingClientRect();
+          const midX = (pts[0].x + pts[1].x) / 2 - rect.left;
+          const midY = (pts[0].y + pts[1].y) / 2 - rect.top;
+
+          engine.transform.panX = midX - (midX - engine.transform.panX) * (newZoom / engine.transform.zoom);
+          engine.transform.panY = midY - (midY - engine.transform.panY) * (newZoom / engine.transform.zoom);
+          engine.transform.zoom = newZoom;
+        }
+      }
+      pinchDistRef.current = dist;
+      redrawViewport();
+      return;
+    }
+
     const pt = getCanvasPoint(e);
     setMousePos(pt);
     setCursorPos({ x: pt.x, y: pt.y, pressure: pt.pressure || 0.5 });
 
-    if (!isDrawing) return;
+    if (!isDrawing || isPinchingRef.current) return;
 
     // 1. Hand / Pan Canvas
     if (activeTool === 'hand') {
@@ -317,6 +364,23 @@ export const CanvasArea: React.FC<CanvasAreaProps> = ({
 
   // Pointer Up
   const handlePointerUp = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    activePointersRef.current.delete(e.pointerId);
+
+    if (activePointersRef.current.size < 2) {
+      pinchDistRef.current = null;
+    }
+
+    if (isPinchingRef.current) {
+      if (activePointersRef.current.size === 0) {
+        isPinchingRef.current = false;
+      }
+      setIsDrawing(false);
+      setShapeStartPoint(null);
+      setShapeCurrentPoint(null);
+      setLastPoint(null);
+      return;
+    }
+
     if (!isDrawing) return;
     setIsDrawing(false);
 
