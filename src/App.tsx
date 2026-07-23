@@ -95,11 +95,13 @@ export default function App() {
     invert: 0,
   });
 
-  // Cursor & Modals
+  // Cursor & Modals & Mobile Drawers
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0, pressure: 0.5 });
   const [textPromptPos, setTextPromptPos] = useState<Point | null>(null);
   const [showNewModal, setShowNewModal] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
+  const [isMobileRightSidebarOpen, setIsMobileRightSidebarOpen] = useState(false);
+  const [isMobileToolsOpen, setIsMobileToolsOpen] = useState(false);
 
   // Force re-render state hook for Canvas state changes
   const [, setTick] = useState(0);
@@ -325,6 +327,10 @@ export default function App() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         onApplyFilterModal={() => setActiveTab('filters')}
+        isMobileRightSidebarOpen={isMobileRightSidebarOpen}
+        onToggleMobileRightSidebar={() => setIsMobileRightSidebarOpen(!isMobileRightSidebarOpen)}
+        isMobileToolsOpen={isMobileToolsOpen}
+        onToggleMobileTools={() => setIsMobileToolsOpen(!isMobileToolsOpen)}
       />
 
       {/* 2. Tool Contextual Settings Sub-Bar */}
@@ -359,6 +365,8 @@ export default function App() {
           primaryColor={primaryColor}
           secondaryColor={secondaryColor}
           onSwapColors={handleSwapColors}
+          isMobileOpen={isMobileToolsOpen}
+          onCloseMobile={() => setIsMobileToolsOpen(false)}
         />
 
         {/* Main Canvas Viewport */}
@@ -438,6 +446,8 @@ export default function App() {
           historyStack={engine.historyStack}
           historyIndex={engine.historyIndex}
           onJumpToHistory={(idx) => engine.jumpToHistoryStep(idx)}
+          isMobileOpen={isMobileRightSidebarOpen}
+          onCloseMobile={() => setIsMobileRightSidebarOpen(false)}
         />
       </div>
 
