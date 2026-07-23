@@ -61,6 +61,10 @@ interface RightSidebarProps {
   historyStack: HistoryStep[];
   historyIndex: number;
   onJumpToHistory: (index: number) => void;
+
+  // Mobile Props
+  isMobileOpen?: boolean;
+  onCloseMobile?: () => void;
 }
 
 export const RightSidebar: React.FC<RightSidebarProps> = ({
@@ -91,6 +95,8 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
   historyStack,
   historyIndex,
   onJumpToHistory,
+  isMobileOpen = false,
+  onCloseMobile,
 }) => {
   const [editingLayerId, setEditingLayerId] = useState<string | null>(null);
   const [editingLayerName, setEditingLayerName] = useState('');
@@ -122,10 +128,10 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
     setEditingLayerId(null);
   };
 
-  return (
-    <aside className="w-72 bg-slate-900 border-l border-slate-800 flex flex-col text-slate-200 z-20 select-none h-[calc(100vh-88px)]">
+  const renderSidebarContent = () => (
+    <div className="flex flex-col h-full overflow-hidden text-slate-200">
       {/* Top Tabs */}
-      <div className="flex border-b border-slate-800 bg-slate-950/50">
+      <div className="flex border-b border-slate-800 bg-slate-950/50 shrink-0">
         {[
           { id: 'layers', label: 'Layers', icon: <Layers className="w-3.5 h-3.5" /> },
           { id: 'colors', label: 'Colors', icon: <Palette className="w-3.5 h-3.5" /> },
@@ -142,13 +148,13 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
             }`}
           >
             {tab.icon}
-            <span>{tab.label}</span>
+            <span className="hidden sm:inline">{tab.label}</span>
           </button>
         ))}
       </div>
 
       {/* Tab Content Body */}
-      <div className="flex-1 overflow-y-auto p-3 scrollbar-thin scrollbar-thumb-slate-700">
+      <div className="flex-1 overflow-y-auto p-3 no-scrollbar">
         {/* TAB 1: LAYERS */}
         {activeTab === 'layers' && (
           <div className="flex flex-col h-full space-y-3">
@@ -596,6 +602,42 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
           </div>
         )}
       </div>
-    </aside>
+    </div>
+  );
+
+  return (
+    <>
+      {/* 1. Desktop Right Sidebar */}
+      <aside className="hidden md:flex w-72 bg-slate-900 border-l border-slate-800 flex-col text-slate-200 z-20 select-none shrink-0 h-full">
+        {renderSidebarContent()}
+      </aside>
+
+      {/* 2. Mobile Right Slide-Over Panel */}
+      {isMobileOpen && (
+        <div className="md:hidden fixed inset-0 z-50 flex justify-end">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs"
+            onClick={onCloseMobile}
+          />
+
+          {/* Slide-over panel */}
+          <div className="relative w-80 max-w-[88vw] bg-slate-900 border-l border-slate-800 flex flex-col z-50 shadow-2xl h-full animate-in slide-in-from-right duration-200">
+            <div className="flex items-center justify-between p-3 border-b border-slate-800 bg-slate-950">
+              <span className="font-bold text-sky-400 text-sm">Panels & Layers</span>
+              <button
+                onClick={onCloseMobile}
+                className="p-1 rounded text-slate-400 hover:text-slate-100"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="flex-1 overflow-hidden">
+              {renderSidebarContent()}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
