@@ -60,7 +60,7 @@ export const ToolPropertiesBar: React.FC<ToolPropertiesBarProps> = ({
   setGridSize,
 }) => {
   return (
-    <div className="h-10 bg-slate-850 bg-slate-900/90 border-b border-slate-800 flex items-center px-4 text-xs text-slate-300 z-10 overflow-x-auto gap-4 select-none scrollbar-none">
+    <div className="h-10 bg-slate-900/90 border-b border-slate-800 flex items-center px-2 sm:px-4 text-xs text-slate-300 z-10 overflow-x-auto gap-3 sm:gap-4 select-none no-scrollbar shrink-0 whitespace-nowrap">
       {/* 1. Brush Tool Properties */}
       {['brush', 'pencil', 'calligraphy', 'marker', 'highlighter', 'watercolor', 'airbrush', 'pixel', 'neon', 'eraser'].includes(activeTool) && (
         <div className="flex items-center space-x-4">
